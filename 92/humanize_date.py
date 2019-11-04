@@ -19,11 +19,9 @@ TIME_OFFSETS = (
 def pretty_date(date):
     """Receives a datetime object and converts/returns a readable string
        using TIME_OFFSETS"""
-    if not isinstance(date, datetime):
+    if not isinstance(date, datetime) or date > NOW:
         raise ValueError
     delta = int(NOW.timestamp()) - int(date.timestamp())
-    if delta < 0:
-        return ValueError
     for o in TIME_OFFSETS:
         if delta < o.offset:
             return o.date_str.format(delta if o.divider is None else int(delta / o.divider))
