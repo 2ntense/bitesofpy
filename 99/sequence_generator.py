@@ -7,4 +7,4 @@ def sequence_generator():
             yield i
             yield chr(i + 64)
 
-    itertools.cycle(sequence())
+    return itertools.cycle(sequence())
