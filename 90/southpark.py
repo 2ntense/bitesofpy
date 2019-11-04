@@ -3,7 +3,7 @@ import csv
 
 import requests
 
-CSV_URL = 'https://raw.githubusercontent.com/pybites/SouthParkData/master/by-season/Season-{}.csv' # noqa E501
+CSV_URL = 'https://raw.githubusercontent.com/pybites/SouthParkData/master/by-season/Season-{}.csv'  # noqa E501
 
 
 def get_season_csv_file(season):
@@ -22,3 +22,4 @@ def get_num_words_spoken_by_character_per_episode(content: str):
     dd = defaultdict(Counter)
     for row in reader:
         dd[row["Character"]][row["Episode"]] += len(row["Line"].split())
+    return dd
