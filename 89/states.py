@@ -63,4 +63,4 @@ def combine_state_names_and_abbreviations(us_state_abbrev=us_state_abbrev,
        the us_state_abbrev dict, and the last 10 states from the states
        list (see above) and combine them into a new list without losing
        alphabetical order"""
-    return list(us_state_abbrev.values())[:10] + states[-10:]
+    return sorted(list(us_state_abbrev.values()))[:10] + sorted(states[-10:])
