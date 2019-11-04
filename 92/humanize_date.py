@@ -1,5 +1,5 @@
 from collections import namedtuple
-from datetime import datetime, timedelta
+from datetime import datetime
 
 TimeOffset = namedtuple('TimeOffset', 'offset date_str divider')
 
