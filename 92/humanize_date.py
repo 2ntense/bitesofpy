@@ -23,3 +23,4 @@ def pretty_date(date):
     for o in TIME_OFFSETS:
         if delta < o.offset:
             return o.date_str.format(delta if o.divider is None else int(delta / o.divider))
+    return date.strftime("%m/%d/%y")
