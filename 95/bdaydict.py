@@ -9,8 +9,9 @@ class BirthdayDict(dict):
         self.update(*args, **kwargs)
 
     def __setitem__(self, name, birthday):
-        if birthday in self.values():
-            print(MSG.format(name))
+        for v in self.values():
+            if birthday.day == v.day and birthday.month == v.month:
+                print(MSG.format(name))
         self.__dict__[name] = birthday
 
     def values(self):
