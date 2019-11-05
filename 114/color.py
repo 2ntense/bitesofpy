@@ -65,11 +65,13 @@ class Color:
 
     def __repr__(self):
         """Returns the repl of the object"""
-        return f"{__class__.__name__}('{list(self.rgb)[0]}')"
+        for k, v in COLOR_NAMES.items():
+            if v == self.rgb:
+                return f"{__class__.__name__}('{k.lower()}')"
+        return ""
 
     def __str__(self):
         """Returns the string value of the color object"""
-        for k, v in COLOR_NAMES.items():
-            if v == self.rgb:
-                return k
-        return "Unknown"
+        if self.rgb is None:
+            return "Unknown"
+        return f"({self.rgb[0]}, {self.rgb[1]}, {self.rgb[2]})"
