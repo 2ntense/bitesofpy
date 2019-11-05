@@ -14,4 +14,4 @@ def get_duplicate_indices(words):
     for word in words:
         c[word] += 1
 
-    return [words.index(k) for k, v in c if v > 1]
+    return [words.index(k) for k, v in c.items() if v > 1]
