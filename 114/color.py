@@ -39,9 +39,9 @@ class Color:
         def spl(s: str) -> list:
             return [s[i] + s[i + 1] for i in range(0, len(s), 2)]
 
-        l = spl(hex[1:])
+        splitted = spl(hex[1:])
 
-        return int(l[0], 16), int(l[1], 16), int(l[2], 16)
+        return int(splitted [0], 16), int(splitted [1], 16), int(splitted [2], 16)
 
 
     @classmethod
@@ -60,7 +60,4 @@ class Color:
 
     def __str__(self):
         """Returns the string value of the color object"""
-        pass
-
-c = Color({"ALICEBLUE": (240, 248, 255)})
-print(c.hex2rgb("#ffffff"))
+        return f"{list(self.rgb)[0]}"
