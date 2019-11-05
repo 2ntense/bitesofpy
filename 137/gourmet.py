@@ -89,6 +89,26 @@ SPARKLING_WINES = [
 ]
 
 
+def _similarity(a, b):
+    def letter_counter(item):
+        c = Counter()
+        for char in item.lower():
+            c[char] += 1
+        return c
+
+    ac = letter_counter(a)
+    bc = letter_counter(b)
+
+    def score(a, b):
+        d = dict()
+        for k, v in a.items():
+            if k in b.keys():
+                d[k] = min(v, b[k])
+        return sum(d.values())
+
+    return score(ac, bc) / (1 + abs(len(a) - len(b)) ** 2)
+
+
 def best_match_per_wine(wine_type="all"):
     """ wine cheese pair with the highest match score
     returns a tuple which contains wine, cheese, score
@@ -104,30 +124,11 @@ def best_match_per_wine(wine_type="all"):
     else:
         raise ValueError
 
-    def similarity(a, b):
-        def letter_counter(item):
-            c = Counter()
-            for char in item.lower():
-                c[char] += 1
-            return c
-
-        ac = letter_counter(a)
-        bc = letter_counter(b)
-
-        def score(a, b):
-            d = dict()
-            for k, v in a.items():
-                if k in b.keys():
-                    d[k] = min(v, b[k])
-            return sum(d.values())
-
-        return score(ac, bc) / (1 + abs(len(a) - len(b)) ** 2)
-
     output = ["wine", "cheese", 0]
 
     for wine in wine_it:
         for cheese in CHEESES:
-            similarity_score = similarity(wine, cheese)
+            similarity_score = _similarity(wine, cheese)
             if similarity_score > output[2]:
                 output[0] = wine
                 output[1] = cheese
@@ -147,7 +148,13 @@ def match_wine_5cheeses():
     ('Zinfandel', ['Caithness', 'Bel Paese', 'Ilchester', 'Limburger', 'Lancashire'])
     ]
     """
-    pass
-
-
-print(best_match_per_wine())
+    pairs = list()
+    for wine in itertools.chain(WHITE_WINES, RED_WINES, SPARKLING_WINES):
+        cheese_list = list()
+        for cheese in CHEESES:
+            cheese_list.append((cheese, _similarity(wine, cheese)))
+        cheese_list.sort(key=lambda x: x[0])
+        cheese_list.sort(key=lambda x: x[1], reverse=True)
+        cheeses = [cheese_list[i][0] for i in range(0, 5)]
+        pairs.append((wine, cheeses))
+    return sorted(pairs, key=lambda x: x[0])
