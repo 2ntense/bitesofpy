@@ -107,7 +107,7 @@ def best_match_per_wine(wine_type="all"):
     def similarity(a, b):
         def letter_counter(item):
             c = Counter()
-            for char in item:
+            for char in item.lower():
                 c[char] += 1
             return c
 
