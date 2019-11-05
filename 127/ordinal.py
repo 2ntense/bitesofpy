@@ -24,7 +24,7 @@ def get_ordinal_suffix(number):
 
     suffix = "th"
     if is_teen_number(s):
-        suffix = "th"
+        pass
     elif s[-1] == "1":
         suffix = "st"
     elif s[-1] == "2":
