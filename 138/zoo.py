@@ -15,11 +15,3 @@ class Animal:
     @classmethod
     def zoo(cls):
         return "\n".join([f"{a[0]}. {a[1]}" for a in cls.animals])
-
-
-dog = Animal('dog')
-cat = Animal('cat')
-fish = Animal('fish')
-lion = Animal('lion')
-mouse = Animal('mouse')
-print(Animal.zoo())
