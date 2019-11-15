@@ -6,7 +6,7 @@ class Animal:
     def __init__(self, name):
         self.name = name.title()
         Animal.sequence += 1
-        self.index = self.sequence
+        self.index = Animal.sequence
         Animal.animals.append((self.index, self.name))
 
     def __str__(self):
