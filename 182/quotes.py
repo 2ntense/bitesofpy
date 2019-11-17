@@ -28,8 +28,4 @@ HTML = """<!DOCTYPE html>
 
 def extract_quotes(html: str = HTML) -> dict:
     """See instructions in the Bite description"""
-    quotes = dict()
-    matches = re.findall(r'<p>\d+\.\s"(.+)"\s-\s(.+)</p>', html)
-    for match in matches:
-        quotes[match[1]] = match[0]
-    return quotes
+    return {m[1]: m[0] for m in re.findall(r'<p>\d+\.\s"(.+)"\s-\s(.+)</p>', html)}
