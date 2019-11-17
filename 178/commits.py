@@ -1,7 +1,7 @@
-import datetime
 import re
 from collections import Counter
 import os
+from datetime import datetime
 from urllib.request import urlretrieve
 
 commits = os.path.join('/tmp', 'commits')
@@ -27,28 +27,20 @@ def get_min_max_amount_of_commits(commit_log: str = commits,
 
     changes_month = Counter()
     for line in f.readlines():
-        if not line.startswith("Date:"):
-            raise ValueError("Line doesn't start with 'Date:'")
-        split = re.split(r'^Date:\s{3}(.+?)\s\|\s(.+)', line)
-        date_string = split[1]
-        datetime_obj = datetime.datetime.strptime(date_string, "%a %b %d %H:%M:%S %Y %z")
+        date_string, changes = re.split(r'^Date:\s{3}(.+?)\s\|\s(.+)', line)[1:-1]
+        datetime_obj = datetime.strptime(date_string, "%a %b %d %H:%M:%S %Y %z")
 
         if year and year != datetime_obj.year:
             continue
 
-        changes = split[2]
-
-        insertions = 0
         re_insertions = re.search(r"(\d+) insertions?\(\+\)", changes)
-        if re_insertions:
-            insertions = int(re_insertions[1])
-        deletions = 0
+        insertions = 0 if not re_insertions else int(re_insertions[1])
         re_deletions = re.search(r"(\d+) deletions?\(-\)", changes)
-        if re_deletions:
-            deletions = int(re_deletions[1])
+        deletions = 0 if not re_deletions else int(re_deletions[1])
 
-        changes_month[YEAR_MONTH.format(y=datetime_obj.year, m=datetime_obj.month)] += insertions + deletions
+        yyyymm = YEAR_MONTH.format(y=datetime_obj.year, m=datetime_obj.month)
+        changes_month[yyyymm] += insertions + deletions
 
     f.close()
-    changes_month_most_common = changes_month.most_common()
-    return changes_month_most_common[-1][0], changes_month_most_common[0][0]
+    most_common = changes_month.most_common()
+    return most_common[-1][0], most_common[0][0]
