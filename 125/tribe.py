@@ -1,8 +1,7 @@
 from collections import Counter
-
+import re
 from bs4 import BeautifulSoup, Tag
 import requests
-import re
 
 AMAZON = "amazon.com"
 # static copy
@@ -25,17 +24,17 @@ def get_top_books(content=None, limit=5):
     soup = BeautifulSoup(content, "html.parser")
     div = soup.find("div", class_="entry-content")
 
-    start = False
-    l = list()
+    start = 0
+    cntr = Counter()
 
     for c in div.children:
         if isinstance(c, Tag):
-            if start:
-                if c.text.startswith("***"):
-                    start = False
-                    break
-                l.append(c)
-            elif c.text.startswith("Top Books (2 or more mentions)"):
-                start = True
+            if c.text.startswith("###"):
+                break
+            elif start == 2:
+                for book in c.find_all(href=re.compile(AMAZON)):
+                    cntr[book.text] += 1
+            elif c.text.startswith("***"):
+                start += 1
 
-    return [re.match(r"(.+?) \(.+?\)", b.text).group(1) for b in l][:limit]
+    return [book[0] for book in cntr.most_common(limit)]
