@@ -1,4 +1,4 @@
-## [Bite 155. Split a string by spaces or quoted text](https://codechalleng.es/bites/155/)
+## [Bite 190. Parse income distribution from Latin America XML](https://codechalleng.es/bites/190/)
 
 Good luck and please share you code in the Bite forums upon completion.
 
