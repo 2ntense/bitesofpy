@@ -17,14 +17,3 @@ class Mother(Person):
 class Child(Father, Mother):
     def __str__(self):
         return "I am the coolest kid"
-
-
-person = Person()
-dad = Father()
-mom = Mother()
-child = Child()
-
-print(person)
-print(dad)
-print(mom)
-print(child)
