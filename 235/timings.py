@@ -22,8 +22,4 @@ def get_bite_with_fastest_avg_test(timings: list) -> str:
         runtime = float(match.groups()[2])
         avg_runtime = runtime / passed_count
         bite_avg.append((bite_no, avg_runtime))
-    return sorted(bite_avg, key=lambda x: x[1])[0[0]
-
-
-with open(timings_log) as f:
-    print(get_bite_with_fastest_avg_test(timings=f.readlines()))
+    return sorted(bite_avg, key=lambda x: x[1])[0][0]
